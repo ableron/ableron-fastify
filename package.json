@@ -1,0 +1,60 @@
+{
+  "name": "@ableron/fastify",
+  "version": "0.0.1",
+  "description": "Fastify Middleware for Ableron Server Side UI Composition",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=19"
+  },
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc",
+    "prettier": "prettier . --write",
+    "test": "vitest"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "ableron",
+    "fastify",
+    "ssi",
+    "server-side-includes",
+    "ui-composition",
+    "dynamic-ui-composition"
+  ],
+  "author": "Torsten Blasche <dev@t-blasche.de>",
+  "license": "Apache-2.0",
+  "homepage": "https://github.com/ableron/ableron-fastify",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ableron/ableron-fastify.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ableron/ableron-fastify/issues"
+  },
+  "dependencies": {
+    "@ableron/ableron": "^1.3.1",
+    "fastify-plugin": "^4.5.1"
+  },
+  "devDependencies": {
+    "fastify": "^4.24.3",
+    "prettier": "^3.1.0",
+    "rimraf": "^5.0.5",
+    "supertest": "^6.3.3",
+    "ts-loader": "^9.5.1",
+    "typescript": "^5.3.2",
+    "vitest": "^0.34.6"
+  },
+  "prettier": {
+    "printWidth": 120,
+    "quoteProps": "consistent",
+    "singleQuote": true,
+    "trailingComma": "none"
+  }
+}
