@@ -1,6 +1,6 @@
 {
   "name": "@ableron/fastify",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Fastify Middleware for Ableron Server Side UI Composition",
   "type": "module",
   "main": "./dist/index.js",
