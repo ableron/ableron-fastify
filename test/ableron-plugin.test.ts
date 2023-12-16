@@ -106,6 +106,26 @@ describe('Ableron Fastify Middleware', () => {
     expect(response.text).toBe('☺');
   });
 
+  it('should pass request headers to resolveIncludes()', async () => {
+    // given
+    const app = appWithAbleronPlugin();
+    app.get('/', (request, reply) => {
+      reply
+        .type('text/html; charset=utf-8')
+        .send(`<ableron-include src="${getFragmentBaseUrl(request)}/fragment">fallback</ableron-include>`);
+    });
+    app.get('/fragment', (request, reply) => {
+      reply.type('text/html; charset=utf-8').send(request.headers['user-agent']);
+    });
+    await app.ready();
+
+    // when
+    const response = await request(app.server).get('/').set('User-Agent', 'test');
+
+    // then
+    expect(response.text).toBe('test');
+  });
+
   function appWithAbleronPlugin() {
     const app = Fastify({ logger: true });
     app.register(ableronPlugin, {

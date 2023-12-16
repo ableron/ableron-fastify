@@ -22,7 +22,7 @@ async function ableronPlugin(app, opts) {
 
     try {
       return ableron
-        .resolveIncludes(payload, reply.getHeaders())
+        .resolveIncludes(payload, request.headers)
         .then((transclusionResult) => {
           transclusionResult
             .getResponseHeadersToPass()
