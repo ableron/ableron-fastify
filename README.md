@@ -17,10 +17,14 @@ npm i @ableron/fastify
 ```js
 import Fastify from 'fastify';
 import ableronPlugin from '@ableron/fastify';
-const app = Fastify();
+const app = Fastify({ logger: true });
 
-app.register(ableronPlugin);
-app.listen({ port: 3000 }, console.log);
+app.register(ableronPlugin, {
+  ableron: {
+    logger: console
+  }
+});
+app.listen({ port: 3000, host: '0.0.0.0' });
 ```
 
 ### Configuration
