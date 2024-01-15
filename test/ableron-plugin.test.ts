@@ -1,9 +1,9 @@
 import { describe, expect, it } from 'vitest';
-import ableronPlugin from '../src';
+import ableron from '../src';
 import Fastify from 'fastify';
 import request from 'supertest';
 
-describe('Ableron Fastify Middleware', () => {
+describe('Ableron Fastify Plugin', () => {
   it('should apply transclusion', async () => {
     // given
     const app = appWithAbleronPlugin();
@@ -128,7 +128,7 @@ describe('Ableron Fastify Middleware', () => {
 
   function appWithAbleronPlugin() {
     const app = Fastify({ logger: true });
-    app.register(ableronPlugin, {
+    app.register(ableron, {
       ableron: {
         logger: console
       }

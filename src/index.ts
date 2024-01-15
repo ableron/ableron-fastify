@@ -1,7 +1,7 @@
 import fastifyPlugin from 'fastify-plugin';
 import { Ableron } from '@ableron/ableron';
 
-async function ableronPlugin(app, opts) {
+async function ableron(app, opts) {
   const shouldPerformUiComposition = (reply) =>
     !(reply.statusCode >= 100 && reply.statusCode <= 199) &&
     !(reply.statusCode >= 300 && reply.statusCode <= 399) &&
@@ -49,4 +49,4 @@ async function ableronPlugin(app, opts) {
   });
 }
 
-export default fastifyPlugin(ableronPlugin);
+export default fastifyPlugin(ableron);

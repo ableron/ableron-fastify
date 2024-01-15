@@ -16,10 +16,10 @@ npm i @ableron/fastify
 
 ```js
 import Fastify from 'fastify';
-import ableronPlugin from '@ableron/fastify';
+import ableron from '@ableron/fastify';
 const app = Fastify({ logger: true });
 
-app.register(ableronPlugin, {
+app.register(ableron, {
   ableron: {
     logger: console
   }
