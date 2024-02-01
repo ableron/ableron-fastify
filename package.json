@@ -52,12 +52,12 @@
     "fastify-plugin": "^4.5.1"
   },
   "devDependencies": {
-    "fastify": "^4.25.2",
-    "prettier": "^3.2.2",
+    "fastify": "^4.26.0",
+    "prettier": "^3.2.4",
     "supertest": "^6.3.4",
     "ts-loader": "^9.5.1",
     "typescript": "^5.3.3",
-    "vitest": "^1.2.0"
+    "vitest": "^1.2.2"
   },
   "prettier": {
     "printWidth": 120,
