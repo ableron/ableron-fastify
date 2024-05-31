@@ -48,16 +48,16 @@
     "url": "https://github.com/ableron/ableron-fastify/issues"
   },
   "dependencies": {
-    "@ableron/ableron": "^1.6.0",
+    "@ableron/ableron": "^1.7.0",
     "fastify-plugin": "^4.5.1"
   },
   "devDependencies": {
-    "fastify": "4.26.2",
+    "fastify": "4.27.0",
     "prettier": "3.2.5",
-    "supertest": "6.3.4",
+    "supertest": "7.0.0",
     "ts-loader": "9.5.1",
     "typescript": "5.4.5",
-    "vitest": "1.5.3"
+    "vitest": "1.6.0"
   },
   "prettier": {
     "printWidth": 120,
