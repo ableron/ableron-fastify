@@ -8,7 +8,7 @@ async function ableron(app, opts) {
     (!reply.getHeader('content-type') || /^text\/html/i.test(String(reply.getHeader('content-type'))));
   const ableron = new Ableron(opts?.ableron || {}, opts?.ableron?.logger);
 
-  app.addHook('onSend', async (request, reply, payload) => {
+  ableron.getConfig().enabled && app.addHook('onSend', async (request, reply, payload) => {
     if (!shouldPerformUiComposition(reply)) {
       ableron
         .getLogger()
