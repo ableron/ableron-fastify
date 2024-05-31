@@ -133,7 +133,7 @@ describe('Ableron Fastify Plugin', () => {
       debug: (msg) => {
         ableronSkippingUiCompositionLogMessage = msg;
       }
-    }
+    };
 
     // when
     const app = Fastify({ logger: true });
@@ -150,7 +150,9 @@ describe('Ableron Fastify Plugin', () => {
     await request(app.server).get('/');
 
     // then
-    expect(ableronSkippingUiCompositionLogMessage).toBe('[Ableron] Skipping UI composition (response status: 301, content-type: text/plain; charset=utf-8)');
+    expect(ableronSkippingUiCompositionLogMessage).toBe(
+      '[Ableron] Skipping UI composition (response status: 301, content-type: text/plain; charset=utf-8)'
+    );
     ableronSkippingUiCompositionLogMessage = null;
 
     // when

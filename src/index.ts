@@ -8,45 +8,46 @@ async function ableron(app, opts) {
     (!reply.getHeader('content-type') || /^text\/html/i.test(String(reply.getHeader('content-type'))));
   const ableron = new Ableron(opts?.ableron || {}, opts?.ableron?.logger);
 
-  ableron.getConfig().enabled && app.addHook('onSend', async (request, reply, payload) => {
-    if (!shouldPerformUiComposition(reply)) {
-      ableron
-        .getLogger()
-        .debug(
-          `[Ableron] Skipping UI composition (response status: ${reply.statusCode}, content-type: ${reply.getHeader(
-            'content-type'
-          )})`
-        );
-      return payload;
-    }
-
-    try {
-      return ableron
-        .resolveIncludes(payload, request.headers)
-        .then((transclusionResult) => {
-          transclusionResult
-            .getResponseHeadersToPass()
-            .forEach((headerValue, headerName) => reply.header(headerName, headerValue));
-          reply.header(
-            'Cache-Control',
-            transclusionResult.calculateCacheControlHeaderValueByResponseHeaders(reply.getHeaders())
+  ableron.getConfig().enabled &&
+    app.addHook('onSend', async (request, reply, payload) => {
+      if (!shouldPerformUiComposition(reply)) {
+        ableron
+          .getLogger()
+          .debug(
+            `[Ableron] Skipping UI composition (response status: ${reply.statusCode}, content-type: ${reply.getHeader(
+              'content-type'
+            )})`
           );
+        return payload;
+      }
 
-          if (transclusionResult.getStatusCodeOverride()) {
-            reply.code(transclusionResult.getStatusCodeOverride());
-          }
+      try {
+        return ableron
+          .resolveIncludes(payload, request.headers)
+          .then((transclusionResult) => {
+            transclusionResult
+              .getResponseHeadersToPass()
+              .forEach((headerValue, headerName) => reply.header(headerName, headerValue));
+            reply.header(
+              'Cache-Control',
+              transclusionResult.calculateCacheControlHeaderValueByResponseHeaders(reply.getHeaders())
+            );
 
-          return transclusionResult.getContent();
-        })
-        .catch((e) => {
-          ableron.getLogger().error(`[Ableron] Unable to perform UI composition: ${e.stack || e.message}`);
-          return payload;
-        });
-    } catch (e: any) {
-      ableron.getLogger().error(`[Ableron] Unable to perform UI composition: ${e.stack || e.message}`);
-      return payload;
-    }
-  });
+            if (transclusionResult.getStatusCodeOverride()) {
+              reply.code(transclusionResult.getStatusCodeOverride());
+            }
+
+            return transclusionResult.getContent();
+          })
+          .catch((e) => {
+            ableron.getLogger().error(`[Ableron] Unable to perform UI composition: ${e.stack || e.message}`);
+            return payload;
+          });
+      } catch (e: any) {
+        ableron.getLogger().error(`[Ableron] Unable to perform UI composition: ${e.stack || e.message}`);
+        return payload;
+      }
+    });
 }
 
 export default fastifyPlugin(ableron);
