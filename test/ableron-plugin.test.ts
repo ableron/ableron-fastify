@@ -50,7 +50,7 @@ describe('Ableron Fastify Plugin', () => {
     expect(response.text).toBe('fragment');
   });
 
-  it('should skip transclusion when content-type ist not text/html', async () => {
+  it('should skip transclusion when content-type is not text/html', async () => {
     // given
     const originalBody = `<ableron-include id="test">fallback</ableron-include>`;
     const app = appWithAbleronPlugin();
