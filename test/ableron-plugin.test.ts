@@ -127,52 +127,38 @@ describe('Ableron Fastify Plugin', () => {
     expect(response.text).toBe('test');
   });
 
-  it('should not register onSend hook when Ableron is disabled', async () => {
-    // given
-    let ableronSkippingUiCompositionLogMessage = null;
-    const catchDebugMessageLogger = {
-      debug: (msg) => {
-        ableronSkippingUiCompositionLogMessage = msg;
-      }
-    } as LoggerInterface;
+  it.each([
+    [true, '[Ableron] Skipping UI composition (response status: 301, content-type: text/plain; charset=utf-8)'],
+    [false, null]
+  ])(
+    'should not hook into response when Ableron is disabled',
+    async (ableronEnabled: boolean, expectedLogMessage?: string) => {
+      // given
+      let ableronSkippingUiCompositionLogMessage = null;
+      const catchDebugMessageLogger = {
+        debug: (msg) => {
+          ableronSkippingUiCompositionLogMessage = msg;
+        }
+      } as LoggerInterface;
+      const app = Fastify({ logger: true });
+      app.register(ableron, {
+        ableron: {
+          enabled: ableronEnabled,
+          logger: catchDebugMessageLogger
+        }
+      });
+      app.get('/', (request, reply) => {
+        reply.code(301).send('<ableron-include id="test">fallback</ableron-include>');
+      });
+      await app.ready();
 
-    // when
-    const app = Fastify({ logger: true });
-    app.register(ableron, {
-      ableron: {
-        enabled: true,
-        logger: catchDebugMessageLogger
-      }
-    });
-    app.get('/', (request, reply) => {
-      reply.code(301).send('<ableron-include id="test">fallback</ableron-include>');
-    });
-    await app.ready();
-    await request(app.server).get('/');
+      // when
+      await request(app.server).get('/');
 
-    // then
-    expect(ableronSkippingUiCompositionLogMessage).toBe(
-      '[Ableron] Skipping UI composition (response status: 301, content-type: text/plain; charset=utf-8)'
-    );
-    ableronSkippingUiCompositionLogMessage = null;
-
-    // when
-    const app2 = Fastify({ logger: true });
-    app2.register(ableron, {
-      ableron: {
-        enabled: false,
-        logger: catchDebugMessageLogger
-      }
-    });
-    app2.get('/', (request, reply) => {
-      reply.code(301).send('<ableron-include id="test">fallback</ableron-include>');
-    });
-    await app2.ready();
-    await request(app2.server).get('/');
-
-    // then
-    expect(ableronSkippingUiCompositionLogMessage).toBe(null);
-  });
+      // then
+      expect(ableronSkippingUiCompositionLogMessage).toBe(expectedLogMessage);
+    }
+  );
 
   function appWithAbleronPlugin() {
     const app = Fastify({ logger: true });
