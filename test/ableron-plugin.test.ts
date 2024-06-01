@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import ableron from '../src';
 import Fastify from 'fastify';
 import request from 'supertest';
+import { LoggerInterface } from '@ableron/ableron';
 
 describe('Ableron Fastify Plugin', () => {
   it('should apply transclusion', async () => {
@@ -133,7 +134,7 @@ describe('Ableron Fastify Plugin', () => {
       debug: (msg) => {
         ableronSkippingUiCompositionLogMessage = msg;
       }
-    };
+    } as LoggerInterface;
 
     // when
     const app = Fastify({ logger: true });
