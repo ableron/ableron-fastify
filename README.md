@@ -21,9 +21,14 @@ const app = Fastify({ logger: true });
 
 app.register(ableron, {
   ableron: {
+    // set optional config
+    statsAppendToContent: true,
+
+    // set optional logger
     logger: console
   }
 });
+
 app.listen({ port: 3000, host: '0.0.0.0' });
 ```
 

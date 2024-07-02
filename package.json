@@ -48,7 +48,7 @@
     "url": "https://github.com/ableron/ableron-fastify/issues"
   },
   "dependencies": {
-    "@ableron/ableron": "^1.7.0",
+    "@ableron/ableron": "^1.8.2",
     "fastify-plugin": "^4.5.1"
   },
   "devDependencies": {
